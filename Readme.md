@@ -18,5 +18,4 @@ This is a simple Employee Management System built to demonstrate basic CRUD (Cre
 
 *   **Backend:**
     *   **Node.js:** A JavaScript runtime environment.
-    *   **Express.js:** A fast, unopinionated, minimalist web framework for Node.js.
-
+    *   **postgresql:** PostgreSQL is a powerful, open-source relational database management system.
