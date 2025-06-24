@@ -1,5 +1,4 @@
 import { selectAuth } from "@/redux/reducer.js";
-import EmployeesTable from "./EmployeesTable.js";
 import {
   createColumnHelper,
   flexRender,
@@ -126,7 +125,7 @@ const Dashboard: React.FC = () => {
                 size={20}
               />
             </div>
-          {/* <EmployeesTable />    */}
+    
           <div className="overflow-x-auto bg-white shadow-md rounded-lg">
              <button
                     onClick={()=>addEmployee()}
