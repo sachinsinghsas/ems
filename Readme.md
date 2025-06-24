@@ -12,6 +12,7 @@ This is a simple Employee Management System built to demonstrate basic CRUD (Cre
 
 *   **Frontend:**
     *   **ReactJS:** A JavaScript library for building user interfaces.
+    *   **Tailwind CSS:** Tailwind CSS is a utility-first CSS framework that simplifies web development by  providing a set of pre-designed  utility classes.
     *   **Redux Toolkit:** The official, opinionated, batteries-included toolset for efficient Redux 
     *   **TanStack Table (formerly React Table):** A headless UI library for building powerful tables and 
     *   **React Hook Form:** A performant, flexible, and extensible forms library for React. 
