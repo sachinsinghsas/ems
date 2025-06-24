@@ -35,6 +35,9 @@ export const createEmployee = async (req, res, next) => {
 };
 
 export const getAllEmployees = async (req, res, next) => {
+   const isValidToken = verifyToken(req, res, next);
+    if(!isValidToken)  return handleResponse(res, 403, "Token is either wrong or something wrong with header request");
+   
   try {
     const employees = await getAllEmployeesService();
     handleResponse(res, 200, "Employees fetched successfully", employees);
