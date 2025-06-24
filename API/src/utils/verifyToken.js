@@ -18,12 +18,6 @@ const verifyToken = (req, res) => {
             if (err) {
                 console.log('Failed to authenticate token')
                 return false;
-                // return res.status(403).json({
-                //     "status": 403,
-                //     "message": "Failed to authenticate token",
-                //     "data": [],
-                // });
-
             } else {
                 return true;
             }

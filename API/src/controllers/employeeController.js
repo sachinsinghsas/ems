@@ -7,9 +7,7 @@ import {
   updateEmployeeService,
 } from "../models/employeeModel.js";
 import { handleResponse } from "../utils/handleResponse.js";
-import generateToken from "../utils/generateToken.js";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
 import verifyToken from "../utils/verifyToken.js";
 
 

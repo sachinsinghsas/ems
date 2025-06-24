@@ -3,11 +3,6 @@ import { fetchEmployees } from "./action";
 import type { RootState } from "./store";
 
 
-//get token from local storage
-// const userToken: string | null = localStorage.getItem("user")
-//   ? localStorage.getItem("user")
-//   : null;
-
 export interface AuthState {
   info: string | null;
   employeeInfo: string | null;
