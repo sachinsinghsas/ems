@@ -28,6 +28,8 @@ This is a simple Employee Management System built to demonstrate basic CRUD (Cre
     * Run Command - npm install
     * Run Command - npm start
 
+Note: Look into .env.example file inside API folder for the required env variables
+
 * Run frontend(ReactJS)
     * Navigate into EMS  folder
     * Run command - npm install
