@@ -1,4 +1,8 @@
+import bcrypt from "bcryptjs";
 import pool from "../config/db.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const createEmployeesTable = async () => {
     const queryText = `
@@ -14,10 +18,27 @@ const createEmployeesTable = async () => {
     `;
 
     try {
-        pool.query(queryText);
-        console.log("Employees table created if not exists");
-    } catch (error) {
-        console.log("Error creating employees table: ", error);
+        await pool.query(queryText);
+        console.log('Table created')
+
+        const result = await pool.query(
+            "select id, name, email, designation, salary from employees where id = $1",
+            [1]
+        );
+
+        if (result.rows[0] === undefined) {
+            const saltRounds = 10; // This is the cost factor, not the salt itself
+            const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, saltRounds);
+
+            const queryTextInsert = "INSERT INTO employees (name, email, designation, salary, password) VALUES ($1, $2, $3, $4, $5) RETURNING id";
+            const values = ['John Doe',process.env.ADMIN_EMAIL, 'admin', '2000', hashedPassword];
+            await pool.query(queryTextInsert, values);
+            console.log('Admin user created')
+        }
+
+    }
+    catch (error) {
+        console.log('Issue while generating table', error)
     }
 }
 
