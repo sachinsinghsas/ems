@@ -20,3 +20,18 @@ This is a simple Employee Management System built to demonstrate basic CRUD (Cre
 *   **Backend:**
     *   **Node.js:** A JavaScript runtime environment.
     *   **postgresql:** PostgreSQL is a powerful, open-source relational database management system.
+
+## Start App
+
+* Run backend(Nodejs/Express Js) application
+    * Navigate into API folder 
+    * Run Command - npm install
+    * Run Command - npm start
+
+* Run frontend(ReactJS)
+    * Navigate into EMS  folder
+    * Run command - npm install
+    * Run Command - npm run dev
+
+
+
