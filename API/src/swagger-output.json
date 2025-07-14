@@ -28,46 +28,9 @@
             "description": ""
           }
         }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "designation": {
-                  "example": "any"
-                },
-                "salary": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "confirm_password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
       }
     },
-    "/employees/{id}": {
+    "/employee/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -138,6 +101,45 @@
         }
       }
     },
+    "/employee": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "designation": {
+                  "example": "any"
+                },
+                "salary": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "confirm_password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/login": {
       "post": {
         "description": "",
@@ -158,6 +160,16 @@
             }
           }
         ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "description": "",
         "responses": {
           "default": {
             "description": ""
