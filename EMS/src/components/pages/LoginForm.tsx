@@ -1,8 +1,7 @@
-import { selectAuth, setUser } from "../../redux/reducer";
+import { setUser, useAppDispatch } from "../../redux/reducer";
 import { useSubmitLoginMutation } from "@/redux/api";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
@@ -20,12 +19,11 @@ const LoginForm: React.FC = () => {
   let [color, setColor] = useState<string>("#ffffff");
 
   //RTQ query related stuff
-  const [formData, { data: loginData, isSuccess, isError, error }] =
-    useSubmitLoginMutation();
+  const [formData, { data: loginData, isSuccess, isError, error }] = useSubmitLoginMutation();
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   //React-hook-form related stuff
   const {
@@ -40,27 +38,25 @@ const LoginForm: React.FC = () => {
   };
 
   useEffect(() => {
+
     if (isSuccess) {
       dispatch(
-        setUser({ info: loginData.data, token: loginData.data.token })
+         setUser({ info: loginData?.data})
       );
-      let checkError = dispatch(fetchEmployees());
-
-      checkError.then((response) => {
-        if (response.error !== null || response.error !== undefined) {
-          toast.warning(response.error);
-          navigate("/admin/dashboard");
-        } else {
-          toast.success(loginData.message);
-          navigate("/admin/dashboard");
-        }
+      
+      let checkResponse = dispatch(fetchEmployees());
+     
+      checkResponse.then(() => {
+        toast.success(loginData?.message);
+        navigate("/admin/dashboard");
       })
-
-
     }
 
     if (isError) {
-      toast.warning(error.data.message);
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+      }
     }
   }, [isSuccess, isError]);
 
@@ -91,7 +87,7 @@ const LoginForm: React.FC = () => {
             />
             {errors.email && (
               <p className="text-red-500 text-xs italic">
-                {errors.email.message}
+                {errors.email?.message?.toString()}
               </p>
             )}
           </div>
@@ -111,7 +107,7 @@ const LoginForm: React.FC = () => {
             />
             {errors.password && (
               <p className="text-red-500 text-xs italic">
-                {errors.password.message}
+                {errors.password?.message?.toString()}
               </p>
             )}
           </div>

@@ -1,19 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchEmployees } from "./action";
-import type { RootState } from "./store";
+import { createEmployee, fetchEmployee, fetchEmployees, logoutEmployee, updateEmployee } from "./action";
+import type { AppDispatch, RootState } from "./store";
+import { useDispatch } from "react-redux";
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 
 export interface AuthState {
   info: string | null;
-  employeeInfo: string | null;
+  employeeInfo: string[] | null;
+  employeesInfo: string[] | null;
   token: string | null;
   loading: boolean | null;
-  error: any | null;
+  error: string | null;
 }
 
 const initialState: AuthState = {
   info: null,
-  employeeInfo: null,
+  employeeInfo: [],
+  employeesInfo: [],
   token: null,
   loading: null,
   error: null,
@@ -23,49 +27,96 @@ export const authSlice = createSlice({
   name: "authSlice",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<AuthState>) => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          info: action.payload.employeeInfo,
-          token: action.payload.token,
-        })
-      );
+    setUser: (state, action) => {
       state.info = action.payload.info;
-      state.token = action.payload.token;
     },
-    logout: (state) => {
-      localStorage.removeItem("user"); //delete token from storage
-      state.info = null;
-      state.token = null;
-      state.employeeInfo = null;
-      state.error = null;
-      state.loading = false;
-    },
+    // logoutEmployee: (state) => {
+    //   console.log('logut clicke')
+    //   state.info = null;
+    //   state.employeeInfo = null;
+    //   state.employeesInfo = null;
+    //   state.error = null;
+    //   state.loading = false;
+    // },
   },
   extraReducers: (builder) => {
+    // Fetch all employees
     builder
+       .addCase(fetchEmployees.pending, (state, action) => {
+        state.loading = true;
+        state.error = null; 
+      })
+      .addCase(fetchEmployees.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action?.payload?.data?.message ?? 'Something went wrong';
+      })
       .addCase(fetchEmployees.fulfilled, (state, action) => {
+        state.loading = false;
+        state.employeesInfo = action.payload.data;
+        state.error = null;
+      })
+
+      // Create a new employee
+      .addCase(createEmployee.pending, (state, action) => {
+      state.loading = true;
+      state.error = null; 
+      })
+      .addCase(createEmployee.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action?.payload?.data?.message ?? 'Something went wrong';
+      })
+      .addCase(createEmployee.fulfilled, (state, action) => {
         state.loading = false;
         state.employeeInfo = action.payload.data;
         state.error = null;
       })
-      .addCase(fetchEmployees.pending, (state, action) => {
-        state.loading = true;
-        state.error = "pending";
-        
+      
+      //fetch an employee's detail
+      .addCase(fetchEmployee.pending, (state, action) => {
+      state.loading = true;
+      state.error = null; 
       })
-      .addCase(fetchEmployees.rejected, (state, action) => {
-  
-        state.loading = true;
-        state.error = action.error.message;
-      });
+      .addCase(fetchEmployee.rejected,(state, action: any) => {
+        state.loading = false;
+        state.error = action?.payload?.data?.message ?? 'Something went wrong';
+      })
+      .addCase(fetchEmployee.fulfilled, (state, action) => {
+        state.loading = false;
+        state.employeeInfo = action.payload.data;
+        state.error = null;
+      })
+
+      //update an employee
+       .addCase(updateEmployee.pending, (state, action) => {
+      state.loading = true;
+      state.error = null; 
+      })
+      .addCase(updateEmployee.rejected, (state, action: any) => {
+        state.loading = false;
+        state.error = action?.payload?.data?.message ?? 'Something went wrong';
+      })
+       .addCase(updateEmployee.fulfilled, (state, action) => {
+        state.loading = false;
+        state.employeeInfo = action.payload.data;
+        state.error = null;
+      })
+
+      //logout
+       .addCase(logoutEmployee.fulfilled, (state, action) => {
+        console.log('done')
+       state.info = null;
+      state.employeeInfo = null;
+      state.employeesInfo = null;
+      state.error = null;
+      state.loading = false;
+      })
   },
 });
 
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const selectAuth = (state: RootState) => state.authSlice;
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser } = authSlice.actions;
 
 export default authSlice.reducer;

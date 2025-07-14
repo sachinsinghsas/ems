@@ -4,27 +4,26 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const verifyToken = (req, res) => {
+    const token = req.cookies.token;
 
-    const authHeader = req.headers['authorization'];
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    
+    if (!token) {
         return false;
-    } else {
-        // Extract the token by removing 'Bearer ' prefix
-        const token = authHeader.split(' ')[1];
-        // Verify the token
-       const isValid =  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    
+    }
+
+    try {
+        const isValid = jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
-                console.log('Failed to authenticate token')
-                return false;
+                return false
             } else {
                 return true;
             }
         });
 
         return isValid;
+
+    } catch (err) {
+        return false;
     }
-};
+}
 
 export default verifyToken;

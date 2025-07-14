@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Sidebar from "./components/pages/Sidebar";
 import AddEmployee from "./components/pages/AddEmployee";
 import EditEmployee from "./components/pages/EditEmployee";
+import NotFound from "./components/pages/NotFound";
 
 const App: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -35,36 +36,13 @@ const App: React.FC = () => {
     <>
       <BrowserRouter>
         <ToastContainer />
-        <Routes>
-          <Route index path="/"  element={<LoginForm />} />
-        </Routes>
-        <div className="flex min-h-screen bg-gray-100 font-sans leading-normal tracking-normal">
-          {/* Overlay for small screens when drawer is open */}
-          {isDrawerOpen && window.innerWidth < 1024 && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 z-30"
-              onClick={closeDrawer}
-            ></div>
-          )}
-
-          <Sidebar isOpen={isDrawerOpen} onClose={closeDrawer} />
-
-          <main
-            className={`flex-1 transition-all duration-300 ease-in-out p-6 lg:p-8
-                    ${isDrawerOpen && window.innerWidth < 1024 ? "ml-0" : ""}
-                    ${window.innerWidth >= 1024 ? "lg:ml-2" : ""}
-                `}
-          >
-            <Header onMenuToggle={toggleDrawer} />
             <Routes>
-
-              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/"  element={<LoginForm />} />
+              <Route index path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/add/employee" element={<AddEmployee />} />
               <Route path="/admin/edit/employee/:id" element={<EditEmployee />} />
-
-            </Routes>
-          </main>
-        </div>
+              <Route path="*" element={<NotFound />} /> 
+              </Routes>
       </BrowserRouter>
     </>
   );
