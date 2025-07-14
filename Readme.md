@@ -28,12 +28,18 @@ This is a simple Employee Management System built to demonstrate basic CRUD (Cre
     * Run Command - npm install
     * Run Command - npm start
 
+* To generate code coverage report on Backend(Expressjs/Nodejs) -> npm run test-coverage    
+* To access api endpoints on Swagger : http://localhost:PORT_NUMBER/api-docs/
+Exa:- http://localhost:3000/api-docs/
+
 Note: Look into .env.example file inside API folder for the required env variables
 
 * Run frontend(ReactJS)
     * Navigate into EMS  folder
     * Run command - npm install
     * Run Command - npm run dev
+
+* To generate code coverage report on Frontend(ReactJs) -> npm test
 
 
 
